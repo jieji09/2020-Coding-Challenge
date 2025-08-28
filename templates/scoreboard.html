@@ -9,23 +9,98 @@
       var scoreboard = {{scoreboard|tojson}} 
     </script>
    <style>
-     #title{
-       font-size: 30px;
-       font-weight: bold;
-       color: red;
-       padding: 50px;
-       margin-bottom: 30px;
-     }
-     #reams-input{
-       vertical-align: middle;
-     }
-     #submit-button{
-       vertical-align: middle;
-     }
-     #error-field{
-       color: red;
-     }
-   </style>
+    :root{
+      --card-bg: #ffffff;
+      --soft-border: #e9ecef;
+      --muted: #6c757d;
+    }
+    body{
+      background: #f7f8fa;
+    }
+    #title{
+      font-size: 30px;
+      font-weight: 800;
+      color: #14213d;
+      padding: 32px 8px 16px;
+      margin-bottom: 8px;
+      letter-spacing: .2px;
+    }
+    .scoreboard-card{
+      background: var(--card-bg);
+      border: 1px solid var(--soft-border);
+      border-radius: 16px;
+      box-shadow: 0 4px 14px rgba(20,33,61,.04);
+      overflow: hidden;
+    }
+    .scoreboard-header{
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--soft-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .scoreboard-header .sub{
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .list-group-item{
+      border: none;
+      border-bottom: 1px dashed var(--soft-border);
+      padding: 12px 16px;
+    }
+    .list-group-item:last-child{
+      border-bottom: none;
+    }
+    .team-row{
+      display: grid;
+      grid-template-columns: 56px 1fr 120px 80px;
+      grid-gap: 8px;
+      align-items: center;
+    }
+    .rank-chip{
+      width: 40px; height: 40px; border-radius: 12px;
+      display: grid; place-items: center;
+      font-weight: 700;
+      border: 1px solid var(--soft-border);
+      background: #fafbfc;
+    }
+    .team-name{
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+    .team-meta{
+      font-size: 12px; color: var(--muted);
+    }
+    .score-badge{
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1;
+      text-align: right;
+    }
+    .btn-raise{
+      min-width: 64px;
+    }
+    .btn-raise[disabled]{
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .flash{
+      animation: flash 900ms ease;
+    }
+    @keyframes flash{
+      0%{ background:#fff9e6; }
+      100%{ background: transparent; }
+    }
+  
+    @media (max-width: 576px){
+      .team-row{
+        grid-template-columns: 48px 1fr;
+        grid-row-gap: 6px;
+      }
+      .score-badge{ justify-self: start; }
+    }
+  </style>  
   </head>
   <body>
     <div class="container">
