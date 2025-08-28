@@ -1,5 +1,4 @@
 function display_scoreboard(data, highlightId){
-  // 容器骨架（卡片 + 头部 + 列表）
   if ($("#scoreboard-card").length === 0){
     const card = $(`
       <div id="scoreboard-card" class="scoreboard-card">
@@ -16,7 +15,6 @@ function display_scoreboard(data, highlightId){
   const $list = $("#team-list");
   $list.empty();
 
-  // 防御性排序
   const sorted = data.slice().sort((a,b)=> b.score - a.score);
 
   sorted.forEach((team, idx)=>{
@@ -46,11 +44,9 @@ function display_scoreboard(data, highlightId){
     increase_score(id, this);
   });
 
-  // 高亮刚更新的行
   if (highlightId != null){
     const $row = $(`.team-row[data-id="${highlightId}"]`).closest(".list-group-item");
     try{
-      // 轻柔高亮；若 jQuery UI 不可用则 fallback 到加类名
       if (typeof $row.effect === "function"){
         $row.effect("highlight", {color:"#fff3cd"}, 800);
       }else{
@@ -64,13 +60,12 @@ function display_scoreboard(data, highlightId){
   }
 }
 
-function addTeamView(){ /* 不再使用：统一集中由 display_scoreboard 渲染 */ }
+function addTeamView(){ }
 
 function increase_score(id, btnEl){
   const $btn = $(btnEl);
   const $label = $btn.find(".label");
 
-  // 简单 loading 状态
   $btn.prop("disabled", true);
   const originalText = $label.text();
   $label.text("...");
@@ -82,14 +77,12 @@ function increase_score(id, btnEl){
     contentType: "application/json; charset=utf-8",
     data : JSON.stringify({ id: id }),
     success: function(result){
-      // 用服务器返回的最新数据立即重绘并高亮该项
       scoreboard = result.scoreboard;
       display_scoreboard(scoreboard, id);
     },
     error: function(request, status, error){
       console.log("Error");
       console.log(request, status, error);
-      // 失败回滚按钮文案
       $label.text("Try again");
       setTimeout(()=> $label.text(originalText), 1000);
     },

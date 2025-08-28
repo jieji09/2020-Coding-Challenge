@@ -10,12 +10,10 @@ scoreboard = [
 ]
 
 def sort_scoreboard():
-    # 就地按分数从高到低排序
     scoreboard.sort(key=lambda t: t["score"], reverse=True)
 
 @app.route("/")
 def show_scoreboard():
-    # 首次渲染时也保证顺序正确
     sort_scoreboard()
     return render_template("scoreboard.html", scoreboard=scoreboard)
 
